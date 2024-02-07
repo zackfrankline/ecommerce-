@@ -1,7 +1,8 @@
 import CategoryItem from "../category-item/category-item.component";
-import "./categories-container.styles.scss"
+import "./categories-container.styles.scss";
 
-const Categories = ({ categories }) => {
+const Categories = (prop) => {
+  const { categories } = prop;
   return (
     <div className="categories-container">
       {categories.map((category) => {

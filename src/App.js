@@ -1,40 +1,30 @@
+import {Routes,Route} from "react-router-dom"
+import Navigation from "./routes/navigation/navbar.component";
+import Home from "./routes/home/home.component";
+import SignIn from "./routes/sign-in/sign-in.component";
 
-import Categories from "./components/categories-container/categories-container";
 
+const Shop=()=>{
+  return(
+    <div>
+      This is shop page 
+    </div>
+  )
+}
 
 
 const App = () => {
-  
-  const categories = [
-    {
-      id: 1,
-      title: "hats",
-      imageUrl: "https://i.imgur.com/ab9f5sQ.jpg",
-    },
-    {
-      id: 2,
-      title: "shoes",
-      imageUrl: "https://i.imgur.com/mBZMztG.jpg",
-    },
-    {
-      id: 3,
-      title: "shirts",
-      imageUrl: "https://i.imgur.com/oR8qLLy.jpg",
-    },
-    {
-      id: 4,
-      title: "jackets",
-      imageUrl: "https://i.imgur.com/LM4xloH.jpg",
-    },
-    {
-      id: 5,
-      title: "pants",
-      imageUrl: "https://i.imgur.com/Z7iPI7L.jpg",
-    },
-  ];
 
   return (
-    <Categories categories={categories} />
+    <Routes>
+      <Route path="/" element={<Navigation />} >
+        <Route index element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="sign-in" element={<SignIn />} />
+      </Route>
+    </Routes>
+   
+    
   );
 };
 
