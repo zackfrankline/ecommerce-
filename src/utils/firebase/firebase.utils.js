@@ -6,7 +6,9 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  onAuthStateChanged,
+  signInWithRedirect
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -24,8 +26,8 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 //setting up google auth provider class to use googlePopUp Sign in
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
@@ -34,7 +36,9 @@ export const auth = getAuth();
 
 //export signInWithGooglePopUp function
 export const signInWithGooglePopup = async () =>
-  await signInWithPopup(auth, provider);
+  await signInWithPopup(auth, googleProvider);
+
+export const signInWithGoogleRedirect = async() => await signInWithRedirect(auth,googleProvider) 
 
 //export SignUp with Email and Password
 export const createAuthUserWithEmailAndPassword = async (email, password) =>
@@ -74,3 +78,6 @@ export const createUserDocFromAuth = async (userAuth,defaultData={}) => {
   }
   return userDocRef;
 };
+
+//Authentication Observer
+export const onAuthUserStateChanged = (callback) => onAuthStateChanged(auth, callback);

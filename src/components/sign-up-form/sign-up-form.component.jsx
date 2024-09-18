@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocFromAuth,
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import { UserContext } from "../../context/userContext";
+import Button from "../button/button.component";
+
 
 const userFormfieldData = {
   displayName: "",
@@ -17,7 +18,6 @@ const SignUp = () => {
   const [formField, setFormField] = useState(userFormfieldData);
   const { displayName, email, password, confirmPassword } = formField;
 
-  const {setCurrentUser} = useContext(UserContext);
 
   const clearFormField = () => {
     setFormField(userFormfieldData);
@@ -39,7 +39,6 @@ const SignUp = () => {
         email,
         password
       );
-      setCurrentUser(user);
       createUserDocFromAuth(user, { displayName });
     } catch (e) {
       console.log("Error Message:", e);
@@ -48,8 +47,9 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="sign-in-container">
       <h2>Don't have an account? Sign Up</h2>
+      <span>Sign In with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Enter Name:"
@@ -84,7 +84,7 @@ const SignUp = () => {
           onChange={handleChange}
           name="confirmPassword"
         />
-        <button type="submit">Sign Up</button>
+        <Button buttonType="inverted" type="submit">Sign Up</Button>
       </form>
     </div>
   );
