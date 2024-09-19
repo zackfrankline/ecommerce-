@@ -13,13 +13,13 @@ import {
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDTL-DswQiAbAm7dhK8VVEE-oGKAqE2ivk",
-  authDomain: "ecommerce-webapp-7ba06.firebaseapp.com",
-  projectId: "ecommerce-webapp-7ba06",
-  storageBucket: "ecommerce-webapp-7ba06.appspot.com",
-  messagingSenderId: "603111643624",
-  appId: "1:603111643624:web:ad4cbf2f985ab87e8e2c5d",
-  measurementId: "G-72TE3K1W2M",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIRBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

@@ -23,7 +23,10 @@
     overflow: auto;
   }
 
-  button {
+  .checkout-link{
     margin-top: auto;
+    button {
+      width: 100%;
+    }
   }
 }
