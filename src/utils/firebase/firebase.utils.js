@@ -8,9 +8,17 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  signInWithRedirect
+  signInWithRedirect,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  writeBatch,
+  CollectionReference,
+  collection,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -38,23 +46,38 @@ export const auth = getAuth();
 export const signInWithGooglePopup = async () =>
   await signInWithPopup(auth, googleProvider);
 
-export const signInWithGoogleRedirect = async() => await signInWithRedirect(auth,googleProvider) 
+export const signInWithGoogleRedirect = async () =>
+  await signInWithRedirect(auth, googleProvider);
 
 //export SignUp with Email and Password
 export const createAuthUserWithEmailAndPassword = async (email, password) =>
   await createUserWithEmailAndPassword(auth, email, password);
 
 //export SignIn with Email and Password
-export const SignInUserWithEmailAndPassword = async (email, password) => await signInWithEmailAndPassword(auth,email,password);
+export const SignInUserWithEmailAndPassword = async (email, password) =>
+  await signInWithEmailAndPassword(auth, email, password);
 
-//export Sign Out 
-export const signOutUser = async() => await signOut(auth);
+//export Sign Out
+export const signOutUser = async () => await signOut(auth);
 
 //export firestore db instance
 export const db = getFirestore();
 
+export const writeDataToCollection = async (collectionKey, objects) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objects.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
+
 //
-export const createUserDocFromAuth = async (userAuth,defaultData={}) => {
+export const createUserDocFromAuth = async (userAuth, defaultData = {}) => {
   if (!userAuth) return;
   //Referencing to a Doc in DB which is not initialised
   const userDocRef = doc(db, "users", userAuth.uid);
@@ -80,4 +103,5 @@ export const createUserDocFromAuth = async (userAuth,defaultData={}) => {
 };
 
 //Authentication Observer
-export const onAuthUserStateChanged = (callback) => onAuthStateChanged(auth, callback);
+export const onAuthUserStateChanged = (callback) =>
+  onAuthStateChanged(auth, callback);
